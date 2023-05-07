@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Netflie\WhatsAppCloudApi\WebHook;
 use Netflie\WhatsAppCloudApi\WhatsAppCloudApi;
-
+define('STDOUT', fopen('php://stdout', 'w'));
 class HomeController extends Controller
 {
+
     public function notifications_webhook(Request $request)
     {
         $payload = file_get_contents('php://input');
         fwrite(STDOUT, print_r($payload, true) . "\n");
         $webhook = new WebHook();
+        dd($webhook->read($payload));
         fwrite(STDOUT, print_r($webhook->read(json_decode($payload, true)), true) . "\n");
     }
 
