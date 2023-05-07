@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::get('sendMessages',[\App\Http\Controllers\Admin\HomeController::class,'sendMessages']);
 
 Route::get('webhook',[HomeController::class,'webhook']);
-Route::post('notifications-webhook',[HomeController::class,'notifications_webhook']);
+Route::post('notifications-webhook',[\App\Http\Controllers\Admin\HomeController::class,'notifications_webhook']);
 
 
 Route::get('/dashboard', function () {
