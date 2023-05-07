@@ -13,7 +13,7 @@ class HomeController extends Controller
 
     public function notifications_webhook(Request $request)
     {
-        $payload = file_get_contents('php://input');
+        $payload = $request->getContent();
         fwrite(STDOUT, print_r($payload, true) . "\n");
         $webhook = new WebHook();
         dd($webhook->read($payload));
