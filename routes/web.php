@@ -18,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('sendMessages',[\App\Http\Controllers\Admin\HomeController::class,'sendMessages']);
+
 Route::get('webhook',[HomeController::class,'webhook']);
+Route::post('notifications-webhook',[HomeController::class,'notifications_webhook']);
 
 
 Route::get('/dashboard', function () {

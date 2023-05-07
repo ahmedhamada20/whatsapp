@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Netflie\WhatsAppCloudApi\WebHook;
 
 class HomeController extends Controller
 {
@@ -61,16 +62,28 @@ class HomeController extends Controller
     public function webhook(Request $request)
     {
 
-        try {
-            $token = "whatsappapplactions4561";
-            $query = $request->query();
-            $challenge = $request->hub_challenge;
-            $mode = $request->hub_mode;
-            $verify_token = $request->hub_verify_token;
-            echo $challenge;
-        }catch (\Exception $exception){
-            return response()->json(['status' => 'Error']);
-        }
+        $webhook = new WebHook();
+        return $webhook->verify($_GET,"whatsappapplactions4561");
 
+//        try {
+//            $token = "whatsappapplactions4561";
+//            $query = $request->query();
+//            $challenge = $request->hub_challenge;
+//            $mode = $request->hub_mode;
+//            $verify_token = $request->hub_verify_token;
+//            return response()->json($request->all());
+//        }catch (\Exception $exception){
+//            return response()->json(['status' => 'Error']);
+//        }
+
+    }
+
+
+    public function notifications_webhook(Request $request)
+    {
+        $payload = file_get_contents('php://input');
+        fwrite(STDOUT, print_r($payload, true) . "\n");
+        $webhook = new WebHook();
+        fwrite(STDOUT, print_r($webhook->read(json_decode($payload, true)), true) . "\n");
     }
 }
